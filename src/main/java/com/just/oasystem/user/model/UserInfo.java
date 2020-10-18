@@ -13,8 +13,9 @@ public class UserInfo {
 
     private String userNo;
     private String userName;
+    private String password;
     private Integer age;
-    private Integer sex;
+    private String sex;
     private String mobilePhone;
     private String status;
     private String authority;
@@ -46,11 +47,11 @@ public class UserInfo {
         this.age = age;
     }
 
-    public Integer getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(Integer sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
@@ -92,5 +93,13 @@ public class UserInfo {
 
     public void setCreator(String creator) {
         this.creator = creator;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

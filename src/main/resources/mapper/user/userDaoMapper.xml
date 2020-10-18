@@ -5,6 +5,7 @@
     <resultMap id="userInfoMap" type="com.just.oasystem.user.model.UserInfo">
             <result column="user_no" property="userNo"/>
             <result column="user_name" property="userName"/>
+            <result column="password" property="password"/>
             <result column="age" property="age"/>
             <result column="sex" property="sex"/>
             <result column="moble_phone" property="mobilePhone"/>
@@ -17,7 +18,7 @@
     <select id="getAllUserInfo" resultMap="userInfoMap">
 
         SELECT
-              user_no,user_name,age,sex,moble_phone,status,authority,create_time,creator
+              user_no,user_name,password,age,sex,mobile_phone,status,authority,create_time,creator
 
         FROM
               oa_user_info
@@ -26,7 +27,7 @@
     <select id="getUserInfoByNo" resultMap="userInfoMap" parameterType="string">
 
         SELECT
-              user_no,user_name,age,sex,moble_phone,status,authority,create_time,creator
+              user_no,user_name,password,age,sex,mobile_phone,status,authority,create_time,creator
 
         FROM
               oa_user_info
@@ -34,5 +35,36 @@
               user_no = #{userNo}
     </select>
 
+    <insert id="saveUserInfo" parameterType="com.just.oasystem.user.model.UserInfo">
+        INSERT INTO
+                    oa_user_info
+                    (user_no,user_name,password,age,sex,mobile_phone,status,authority,create_time,creator)
+                    VALUES
+                    (#{userNo},#{userName},#{password},#{age},#{sex},#{mobilePhone},#{status},#{authority},now(),#{creator})
+    </insert>
+
+    <update id="updateUserInfo" parameterType="com.just.oasystem.user.model.UserInfo">
+        UPDATE
+               oa_user_info
+               <trim prefix="set" suffixOverrides=",">
+                   <if test="password!=null">
+                       password = #{password},
+                   </if>
+                   <if test="mobilePhone!=null">
+                       mobile_phone = #{mobilePhone},
+                   </if>
+                   <if test="status!=null">
+                       status = #{status},
+                   </if>
+                   <if test="authority!=null">
+                       authority = #{authority},
+                   </if>
+                   <if test="age!=null">
+                       age = #{age}
+                   </if>
+               </trim>
+        WHERE
+                user_no = #{userNo}
+    </update>
 
 </mapper>

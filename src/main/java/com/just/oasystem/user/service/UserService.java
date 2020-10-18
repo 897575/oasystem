@@ -17,4 +17,12 @@ public interface UserService {
 
 
     List<UserInfo> getAllUserInfo();
+
+    UserInfo getUserInfoByNo(String userNo);
+
+    void saveUserInfo(UserInfo userInfo);
+
+    void updateUserInfo(UserInfo userInfo);
+
+
 }

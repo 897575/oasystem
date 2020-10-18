@@ -18,4 +18,19 @@ public class UserServiceImpl implements UserService {
     public List<UserInfo> getAllUserInfo() {
         return userDao.getAllUserInfo();
     }
+
+    @Override
+    public UserInfo getUserInfoByNo(String userNo) {
+        return userDao.getUserInfoByNo(userNo);
+    }
+
+    @Override
+    public void saveUserInfo(UserInfo userInfo) {
+        userDao.saveUserInfo(userInfo);
+    }
+
+    @Override
+    public void updateUserInfo(UserInfo userInfo) {
+        userDao.updateUserInfo(userInfo);
+    }
 }

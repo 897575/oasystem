@@ -1,6 +1,7 @@
 package com.just.oasystem.user.dao;
 
 import com.just.oasystem.user.model.UserInfo;
+import org.apache.catalina.User;
 
 import java.util.List;
 
@@ -20,4 +21,8 @@ public interface UserDao {
     List<UserInfo> getAllUserInfo();
 
     UserInfo getUserInfoByNo(String userNo);
+
+    void saveUserInfo(UserInfo userInfo);
+
+    void updateUserInfo(UserInfo userInfo);
 }
