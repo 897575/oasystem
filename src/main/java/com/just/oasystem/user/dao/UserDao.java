@@ -18,11 +18,28 @@ import java.util.List;
 public interface UserDao {
 
 
+    /**
+     * 获取所有的用户
+     * @return 所有用户信息
+     */
     List<UserInfo> getAllUserInfo();
 
-    UserInfo getUserInfoByNo(String userNo);
+    /**
+     * 根据用户编号获取用户
+     * @param userNo 用户编号
+     * @return 用户信息
+     */
+    UserInfo getUserInfoByNo(UserInfo userInfo);
 
+    /**
+     * 保存用户信息
+     * @param userInfo 用户信息
+     */
     void saveUserInfo(UserInfo userInfo);
 
+    /**
+     * 更新用户信息
+     * @param userInfo 用户更新信息
+     */
     void updateUserInfo(UserInfo userInfo);
 }

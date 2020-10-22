@@ -44,8 +44,7 @@ public class OaUtil {
             if (userInfo == null || userInfo.getUserNo() == null || "".equals(userInfo.getUserNo())
                     || userInfo.getAuthority() == null || "".equals(userInfo.getAuthority())
                     || userInfo.getMobilePhone() == null || "".equals(userInfo.getMobilePhone())
-                    || userInfo.getPassword() == null || "".equals(userInfo.getPassword())
-                    || userInfo.getStatus() == null || "".equals(userInfo.getStatus())) {
+                    || userInfo.getPassword() == null || "".equals(userInfo.getPassword())) {
                 result = true;
             }
         } else if ("modify".equals(type)) {

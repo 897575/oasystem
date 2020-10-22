@@ -17,11 +17,19 @@ public class UserInfo {
     private Integer age;
     private String sex;
     private String mobilePhone;
+    private String email;
     private String status;
     private String authority;
     private String createTime;
     private String creator;
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getUserNo() {
         return userNo;

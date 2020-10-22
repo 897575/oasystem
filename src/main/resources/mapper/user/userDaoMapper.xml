@@ -9,6 +9,7 @@
             <result column="age" property="age"/>
             <result column="sex" property="sex"/>
             <result column="moble_phone" property="mobilePhone"/>
+            <result column="email" property="email"/>
             <result column="status" property="status"/>
             <result column="authority" property="authority"/>
             <result column="create_time" property="createTime"/>
@@ -18,29 +19,40 @@
     <select id="getAllUserInfo" resultMap="userInfoMap">
 
         SELECT
-              user_no,user_name,password,age,sex,mobile_phone,status,authority,create_time,creator
+              user_no,user_name,password,age,sex,mobile_phone,email,status,authority,create_time,creator
 
         FROM
               oa_user_info
     </select>
 
-    <select id="getUserInfoByNo" resultMap="userInfoMap" parameterType="string">
+    <select id="getUserInfoByNo" resultMap="userInfoMap" parameterType="com.just.oasystem.user.model.UserInfo">
 
         SELECT
-              user_no,user_name,password,age,sex,mobile_phone,status,authority,create_time,creator
+              user_no,user_name,password,age,sex,mobile_phone,email,status,authority,create_time,creator
 
         FROM
               oa_user_info
-        WHERE
-              user_no = #{userNo}
+
+        <where>
+            <if test="userNo!=null">
+                user_no = #{userNo}
+            </if>
+            <if test="email!=null">
+                OR email = #{email}
+            </if>
+            <if test="mobilePhone!=null">
+                OR mobile_phone = #{mobilePhone}
+            </if>
+        </where>
+
     </select>
 
     <insert id="saveUserInfo" parameterType="com.just.oasystem.user.model.UserInfo">
         INSERT INTO
                     oa_user_info
-                    (user_no,user_name,password,age,sex,mobile_phone,status,authority,create_time,creator)
+                    (user_no,user_name,password,age,sex,mobile_phone,email,status,authority,create_time,creator)
                     VALUES
-                    (#{userNo},#{userName},#{password},#{age},#{sex},#{mobilePhone},#{status},#{authority},now(),#{creator})
+                    (#{userNo},#{userName},#{password},#{age},#{sex},#{mobilePhone},#{email},#{status},#{authority},now(),#{creator})
     </insert>
 
     <update id="updateUserInfo" parameterType="com.just.oasystem.user.model.UserInfo">
@@ -52,6 +64,9 @@
                    </if>
                    <if test="mobilePhone!=null">
                        mobile_phone = #{mobilePhone},
+                   </if>
+                   <if test="email!=null">
+                       email = #{email}
                    </if>
                    <if test="status!=null">
                        status = #{status},

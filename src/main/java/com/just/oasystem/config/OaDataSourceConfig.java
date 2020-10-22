@@ -13,7 +13,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import javax.sql.DataSource;
 
 /**
- * tag库数据连接
+ * oa库数据连接
  *
  * @author luyu
  * @version v1.0
@@ -28,16 +28,16 @@ public class OaDataSourceConfig {
     static final String PACKAGE = "com.just.oasystem.*.dao";
     private static final String MAPPER_LOCATION = "classpath:mapper/*/*.xml";
 
-    @Value("${spring.datasource.url}")
+    @Value("${spring.mysql.url}")
     private String url;
 
-    @Value("${spring.datasource.username}")
+    @Value("${spring.mysql.username}")
     private String user;
 
-    @Value("${spring.datasource.password}")
+    @Value("${spring.mysql.password}")
     private String password;
 
-    @Value("${spring.datasource.driver.class.name}")
+    @Value("${spring.mysql.driver.class.name}")
     private String driverClass;
 
     @Bean(name = "oaDataSource")

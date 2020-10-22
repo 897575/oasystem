@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfo getUserInfoByNo(String userNo) {
-        return userDao.getUserInfoByNo(userNo);
+    public UserInfo getUserInfoByNo(UserInfo userInfo) {
+        return userDao.getUserInfoByNo(userInfo);
     }
 
     @Override
