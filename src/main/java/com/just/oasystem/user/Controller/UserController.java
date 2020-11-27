@@ -1,13 +1,11 @@
 package com.just.oasystem.user.Controller;
 
-import com.alibaba.fastjson.JSON;
 import com.just.oasystem.user.model.UserInfo;
 import com.just.oasystem.user.service.UserService;
 import com.just.oasystem.util.OaUtil;
 import com.just.oasystem.util.RedisUtil;
 import com.just.oasystem.util.ResponeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -79,9 +77,9 @@ public class UserController {
 
             httpSession.setAttribute("userNo",userInfo.getUserNo());
             //将数据存入redis中30分钟与session一致
-            if(redisUtil.get(userInfo.getUserNo())==null){
-                redisUtil.set(userInfo.getUserNo(),JSON.toJSONString(userInfo),-1);
-            }
+//            if(redisUtil.get(userInfo.getUserNo())==null){
+//                redisUtil.set(userInfo.getUserNo(),JSON.toJSONString(userInfo),-1);
+//            }
             return ResponeUtil.respondSuccessData(userInfo);
         } catch (Exception e) {
             System.out.println(e.getMessage());

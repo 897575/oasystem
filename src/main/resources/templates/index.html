@@ -1,475 +1,168 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <meta charset="utf-8"/>
-    <title>登录页面</title>
-
-    <meta name="description" content="User login page"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-
-    <!-- bootstrap & fontawesome -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="assets/font-awesome/4.2.0/css/font-awesome.min.css"/>
-
-    <!-- text fonts -->
-    <link rel="stylesheet" href="assets/fonts/fonts.googleapis.com.css"/>
-
-    <!-- ace styles -->
-    <link rel="stylesheet" href="assets/css/ace.min.css"/>
-
-    <!--[if lte IE 9]>
-    <link rel="stylesheet" href="assets/css/ace-part2.min.css"/>
-    <![endif]-->
-    <link rel="stylesheet" href="assets/css/ace-rtl.min.css"/>
-
-    <!--[if lte IE 9]>
-    <link rel="stylesheet" href="assets/css/ace-ie.min.css"/>
-    <![endif]-->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-
+    <meta charset="utf-8">
+    <title>122221</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="css/layuimini.css?v=2.0.4.2" media="all">
+    <link rel="stylesheet" href="css/themes/default.css" media="all">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
     <!--[if lt IE 9]>
-    <script src="assets/js/html5shiv.min.js"></script>
-    <script src="assets/js/respond.min.js"></script>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style id="layuimini-bg-color">
+    </style>
 </head>
+<body class="layui-layout-body layuimini-all">
+<div class="layui-layout layui-layout-admin">
 
-<body class="login-layout light-login">
-<div class="main-container">
-    <div class="main-content">
-        <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-                <div class="login-container">
-                    <div class="center">
-                        <h1>
-                            <i class="ace-icon fa fa-leaf green"></i>
-                            <span class="red"></span>
-                            <span class="white" id="id-text2">OA应用管理</span>
-                        </h1>
-                        <h4 class="blue" id="id-company-text">&copy; 江苏科技大学</h4>
-                    </div>
+    <div class="layui-header header">
+        <div class="layui-logo layuimini-logo"></div>
 
-                    <div class="space-6"></div>
+        <div class="layuimini-header-content">
+            <a>
+                <div class="layuimini-tool"><i title="展开" class="fa fa-outdent" data-side-fold="1"></i></div>
+            </a>
 
-                    <div class="position-relative">
-                        <div id="login-box" class="login-box visible widget-box no-border">
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    <h4 class="header blue lighter bigger">
-                                        <i class="ace-icon fa fa-coffee green"></i>
-                                        请输入您的信息
-                                    </h4>
+            <!--电脑端头部菜单-->
+            <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-menu-header-pc layuimini-pc-show">
+            </ul>
 
-                                    <div class="space-6"></div>
+            <!--手机端头部菜单-->
+   <!--         <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-mobile-show">
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="fa fa-list-ul"></i> 选择模块</a>
+                    <dl class="layui-nav-child layuimini-menu-header-mobile">
+                    </dl>
+                </li>
+            </ul>
+-->
+            <ul class="layui-nav layui-layout-right">
 
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" data-refresh="刷新"><i class="fa fa-refresh"></i></a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" data-clear="清理" class="layuimini-clear"><i class="fa fa-trash-o"></i></a>
+                </li>
+                <li class="layui-nav-item mobile layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
+                </li>
+                <li class="layui-nav-item layuimini-setting">
+                    <a href="javascript:;">admin</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" layuimini-content-href="page/user-setting.html" data-title="基本资料" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" layuimini-content-href="page/user-password.html" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
+                        </dd>
+                        <dd>
+                            <hr>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" class="login-out">退出登录</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layuimini-select-bgcolor" lay-unselect>
+                    <a href="javascript:;" data-bgcolor="配色方案"><i class="fa fa-ellipsis-v"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-                                    <fieldset>
-                                        <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input type="text" id="userName" class="form-control"
-                                                                   placeholder="Email"/>
-															<i class="ace-icon fa fa-envelope"></i>
-														</span>
-                                        </label>
+    <!--无限极左侧菜单-->
+    <div class="layui-side layui-bg-black layuimini-menu-left">
+    </div>
 
-                                        <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input type="password" id="password" class="form-control"
-                                                                   placeholder="Password"/>
-															<i class="ace-icon fa fa-lock"></i>
-														</span>
-                                        </label>
+    <!--初始化加载层-->
+    <div class="layuimini-loader">
+        <div class="layuimini-loader-inner"></div>
+    </div>
 
-                                        <div class="space"></div>
+    <!--手机端遮罩层-->
+    <!--<div class="layuimini-make"></div>-->
 
-                                        <div class="clearfix">
-                                            <label class="inline">
-                                                <input type="checkbox" class="ace"/>
-                                                <span class="lbl"> 记住</span>
-                                            </label>
+    <!-- 移动导航 -->
+    <div class="layuimini-site-mobile"><i class="layui-icon"></i></div>
 
-                                            <button type="button" id="login"
-                                                    class="width-35 pull-right btn btn-sm btn-primary">
-                                                <i class="ace-icon fa fa-key"></i>
-                                                <span class="bigger-110">登录</span>
-                                            </button>
-                                        </div>
+    <div class="layui-body">
 
-                                        <div class="space-4"></div>
-                                    </fieldset>
+        <div class="layuimini-tab layui-tab-rollTool layui-tab" lay-filter="layuiminiTab" lay-allowclose="true">
+            <ul class="layui-tab-title">
+                <li class="layui-this" id="layuiminiHomeTabId" lay-id=""></li>
+            </ul>
+            <div class="layui-tab-control">
+                <li class="layuimini-tab-roll-left layui-icon layui-icon-left"></li>
+                <li class="layuimini-tab-roll-right layui-icon layui-icon-right"></li>
+                <li class="layui-tab-tool layui-icon layui-icon-down">
+                    <ul class="layui-nav close-box">
+                        <li class="layui-nav-item">
+                            <a href="javascript:;"><span class="layui-nav-more"></span></a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;" layuimini-tab-close="current">关 闭 当 前</a></dd>
+                                <dd><a href="javascript:;" layuimini-tab-close="other">关 闭 其 他</a></dd>
+                                <dd><a href="javascript:;" layuimini-tab-close="all">关 闭 全 部</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </li>
+            </div>
+            <div class="layui-tab-content">
+                <div id="layuiminiHomeTabIframe" class="layui-tab-item layui-show"></div>
+            </div>
+        </div>
 
-                                    <div class="space-6"></div>
-
-                                    <div class="social-login center">
-
-                                    </div>
-                                </div><!-- /.widget-main -->
-
-                                <div class="toolbar clearfix">
-                                    <div>
-                                        <a href="#" data-target="#forgot-box" class="forgot-password-link">
-                                            <i class="ace-icon fa fa-arrow-left"></i>
-                                            忘记密码
-                                        </a>
-                                    </div>
-
-                                    <div>
-                                        <a href="#" data-target="#signup-box" class="user-signup-link">
-                                            注册
-                                            <i class="ace-icon fa fa-arrow-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div><!-- /.widget-body -->
-                        </div><!-- /.login-box -->
-
-                        <div id="forgot-box" class="forgot-box widget-box no-border">
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    <h4 class="header red lighter bigger">
-                                        <i class="ace-icon fa fa-key"></i>
-                                        找回密码
-                                    </h4>
-
-                                    <div class="space-6"></div>
-                                    <p>
-                                        输入您的电子邮件和接收指令
-                                    </p>
-
-                                    <fieldset>
-                                        <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input id="emailAddress" type="email" class="form-control"
-                                                                   placeholder="Email"/>
-															<i class="ace-icon fa fa-envelope"></i>
-														</span>
-                                        </label>
-
-                                        <div class="clearfix">
-                                            <button type="button" id="sendMail" class="width-35 pull-right btn btn-sm btn-danger">
-                                                <i class="ace-icon fa fa-lightbulb-o"></i>
-                                                <span class="bigger-110">发送邮件</span>
-                                            </button>
-                                        </div>
-                                    </fieldset>
-
-                                </div><!-- /.widget-main -->
-
-                                <div class="toolbar center">
-                                    <a href="#" data-target="#login-box" class="back-to-login-link">
-                                        返回登录
-                                        <i class="ace-icon fa fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div><!-- /.widget-body -->
-                        </div><!-- /.forgot-box -->
-
-                        <div id="signup-box" class="signup-box widget-box no-border">
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    <h4 class="header green lighter bigger">
-                                        <i class="ace-icon fa fa-users blue"></i>
-                                        用户注册
-                                    </h4>
-
-                                    <div class="space-6"></div>
-                                    <p>填写信息: </p>
-
-                                    <form>
-                                        <fieldset>
-                                            <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input id="number" type="text" class="form-control"
-                                                                   placeholder="学号/工号"/>
-															<i class="ace-icon fa fa-child"></i>
-														</span>
-                                            </label>
-
-                                            <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input id="name" type="text" class="form-control"
-                                                                   placeholder="姓名"/>
-															<i class="ace-icon fa fa-user"></i>
-														</span>
-                                            </label>
-
-                                            <label class="block clearfix">
-                                                <span class="block input-icon input-icon-right">
-                                                    <select id="authority" class="form-control">
-                                                        <option>请选择权限</option>
-                                                        <option value="3">教师</option>
-                                                        <option value="1">学生</option>
-                                                        <option value="2">组长</option>
-                                                        <option value="4">系统管理员</option>
-                                                    </select>
-												</span>
-                                            </label>
-                                            <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input id="phone" type="text" class="form-control"
-                                                                   placeholder="电话号码"/>
-															<i class="ace-icon fa fa-phone"></i>
-														</span>
-                                            </label>
-                                            <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input id="mail" type="email" class="form-control"
-                                                                   placeholder="邮箱"/>
-															<i class="ace-icon fa fa-envelope"></i>
-														</span>
-                                            </label>
-
-                                            <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input id="passd" type="password" class="form-control"
-                                                                   placeholder="密码"/>
-															<i class="ace-icon fa fa-lock"></i>
-														</span>
-                                            </label>
-
-                                            <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input id="currentPass" type="password" class="form-control"
-                                                                   placeholder="确认密码"/>
-															<i class="ace-icon fa fa-retweet"></i>
-														</span>
-                                            </label>
-
-                                            <div class="space-24"></div>
-
-                                            <div class="clearfix">
-                                                <button type="reset" class="width-30 pull-left btn btn-sm">
-                                                    <i class="ace-icon fa fa-refresh"></i>
-                                                    <span class="bigger-110">重置</span>
-                                                </button>
-
-                                                <button type="button" id="register"
-                                                        class="width-65 pull-right btn btn-sm btn-success">
-                                                    <span class="bigger-110">注册</span>
-
-                                                    <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
-                                                </button>
-                                            </div>
-                                        </fieldset>
-                                    </form>
-                                </div>
-
-                                <div class="toolbar center">
-                                    <a href="#" id="back" data-target="#login-box" class="back-to-login-link">
-                                        <i class="ace-icon fa fa-arrow-left"></i>
-                                        返回登录
-                                    </a>
-                                </div>
-                            </div><!-- /.widget-body -->
-                        </div><!-- /.signup-box -->
-                    </div><!-- /.position-relative -->
-
-                    <div class="navbar-fixed-top align-right">
-                        <br/>
-                        &nbsp;
-                        <a id="btn-login-dark" href="#">Dark</a>
-                        &nbsp;
-                        <span class="blue">/</span>
-                        &nbsp;
-                        <a id="btn-login-blur" href="#">Blur</a>
-                        &nbsp;
-                        <span class="blue">/</span>
-                        &nbsp;
-                        <a id="btn-login-light" href="#">Light</a>
-                        &nbsp; &nbsp; &nbsp;
-                    </div>
-                </div>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.main-content -->
-</div><!-- /.main-container -->
-
-<!-- basic scripts -->
-
-<!--[if !IE]> -->
-<script src="assets/js/jquery.2.1.1.min.js"></script>
-
-<!-- <![endif]-->
-
-<!--[if IE]>
-<script src="assets/js/jquery.1.11.1.min.js"></script>
-<![endif]-->
-
-<!--[if !IE]> -->
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='assets/js/jquery.min.js'>" + "<" + "/script>");
-</script>
-
-<!-- <![endif]-->
-
-<!--[if IE]>
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='assets/js/jquery1x.min.js'>" + "<" + "/script>");
-</script>
-<![endif]-->
-<script type="text/javascript">
-    if ('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
-</script>
-
-<!-- inline scripts related to this page -->
-<script type="text/javascript">
-    jQuery(function ($) {
-        $(document).on('click', '.toolbar a[data-target]', function (e) {
-            e.preventDefault();
-            var target = $(this).data('target');
-            $('.widget-box.visible').removeClass('visible');//hide others
-            $(target).addClass('visible');//show target
-        });
-    });
-
-    //you don't need this, just used for changing background
-    jQuery(function ($) {
-        $('#btn-login-dark').on('click', function (e) {
-            $('body').attr('class', 'login-layout');
-            $('#id-text2').attr('class', 'white');
-            $('#id-company-text').attr('class', 'blue');
-
-            e.preventDefault();
-        });
-        $('#btn-login-light').on('click', function (e) {
-            $('body').attr('class', 'login-layout light-login');
-            $('#id-text2').attr('class', 'grey');
-            $('#id-company-text').attr('class', 'blue');
-
-            e.preventDefault();
-        });
-        $('#btn-login-blur').on('click', function (e) {
-            $('body').attr('class', 'login-layout blur-login');
-            $('#id-text2').attr('class', 'white');
-            $('#id-company-text').attr('class', 'light-blue');
-
-            e.preventDefault();
-        });
-
-    });
-</script>
-<script type="text/javascript">
-    $("#login").click(function () {
-        var email = $("#userName").val();
-        var password = $("#password").val();
-        if (email == "") {
-            alert("请输入用户名");
-            return;
-        }
-        if (password == "") {
-            alert("请输入密码");
-            return;
-        }
-        $.ajax({
-            url: "/user/check",
-            type: "post",
-            dataType: "json",
-            data: {"email": email, "password": password},
-            success: function (result) {
-                if (result.status == "500") {
-                    alert(result.message);
-                }else{
-                    alert("登录成功");
-                }
-            }
-        });
-    });
-
-    $("#register").click(function () {
-        var userNo = $("#number").val();
-        var password = $("#passd").val();
-        var authority = $("#authority").val();
-        var userName = $("#name").val();
-        var email = $("#mail").val();
-        var currentPass = $("#currentPass").val();
-        var phone = $("#phone").val();
-        if (userNo == "") {
-            alert("请输入学号或者工号");
-            return;
-        }
-        if (password == "") {
-            alert("请输入密码");
-            return;
-        }
-        if (authority == "") {
-            alert("请输入权限");
-            return;
-        }
-        if (userName == "") {
-            alert("请输入姓名");
-            return;
-        }
-        if (currentPass == "") {
-            alert("请确认密码");
-            return;
-        }
-        if (currentPass != password) {
-            alert("两次密码不一致，请重新输入");
-            return;
-        }
-        if (phone == "") {
-            alert("请输入电话号码");
-            return;
-        }
-        $.ajax({
-            url: "/usr/add",
-            type: "post",
-            dataType: "json",
-            data: {
-                "userNo": userNo,
-                "password": password,
-                "userName": userName,
-                "authority": authority,
-                "mobilePhone": phone,
-                "email": email
-            },
-            success: function (result) {
-                if (result.status == "500") {
-                    alert(result.message);
-                } else {
-                    alert("登录成功");
-                    $("#signup-box").removeClass("visible");
-                    $("#login-box").addClass("visible");
-                    $("#number").val("");
-                    $("#passd").val("");
-                    $("#authority option:first").prop("selected", 'selected');
-                    $("#name").val("");
-                    $("#currentPass").val("");
-                    $("#phone").val("");
-                }
-            },
-            error: function () {
-                alert("注册失败");
-            }
-        });
-    });
-
-    $("#sendMail").click(function () {
-       var email = $("#emailAddress").val();
-       if(email==""){
-           alert("请输入邮箱");
-           return;
-       }
-       $.ajax({
-           url:"/mail/sendMessage",
-           type:"post",
-           dataType:"json",
-           data:{"email":email},
-           success:function (result) {
-               if(result.status=="500"){
-                   alert(result.message);
-               }else{
-                   alert("邮件发送成功，请注意查收邮件");
-               }
-           },
-           error:function () {
-               alert("发送异常");
-           }
-       })
-    });
-</script>
-<div style="text-align:center;">
+    </div>
 </div>
+<script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="js/lay-config.js?v=2.0.0" charset="utf-8"></script>
+<script>
+    layui.use(['jquery', 'layer', 'miniAdmin'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniAdmin = layui.miniAdmin,
+            miniTongji = layui.miniTongji;
+
+        var options = {
+            iniUrl: "api/init_all.json",    // 初始化接口
+            clearUrl: "api/clear.json", // 缓存清理接口
+            urlHashLocation: true,      // 是否打开hash定位
+            bgColorDefault: false,      // 主题默认配置
+            multiModule: true,          // 是否开启多模块
+            menuChildOpen: false,       // 是否默认展开菜单
+            loadingTime: 0,             // 初始化加载时间
+            pageAnim: true,             // iframe窗口动画
+            maxTabNum: 20,              // 最大的tab打开数量
+        };
+        miniAdmin.render(options);
+
+        // 百度统计代码，只统计指定域名
+      //  miniTongji.render({
+       //     specific: true,
+         //   domains: [
+        //        '99php.cn',
+        //        'layuimini.99php.cn',
+                'layuimini-onepage.99php.cn',
+       //    ],
+       // });
+
+        $('.login-out').on("click", function () {
+            layer.msg('退出登录成功', function () {
+                window.location = 'page/login-3.html';
+            });
+        });
+    });
+</script>
 </body>
 </html>
