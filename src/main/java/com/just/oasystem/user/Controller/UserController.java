@@ -6,11 +6,14 @@ import com.just.oasystem.util.OaUtil;
 import com.just.oasystem.util.RedisUtil;
 import com.just.oasystem.util.ResponeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,12 +44,11 @@ public class UserController {
             if (resultUserInfo != null) {
                 return ResponeUtil.respondError("信息已经存在，请查看电话、邮箱和学号");
             }
-            String password = OaUtil.transformPass(userInfo.getPassword());
-            userInfo.setPassword(password);
-            userInfo.setStatus("3");
+//            String password = OaUtil.transformPass(userInfo.getPassword());
+//            userInfo.setPassword(password);
             userService.saveUserInfo(userInfo);
         } catch (Exception e) {
-//            System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
             //TODO 异常记录
             return ResponeUtil.respondError("保存失败");
         }
@@ -97,12 +99,66 @@ public class UserController {
         return ResponeUtil.respondSuccess();
     }
 
-    @PostMapping("/user/modifyPassword")
-    public Map<String, Object> modifyPassword(String email, String oldPassword, String newPassword) {
+//    @PostMapping("/user/modifyPassword")
+//    public Map<String, Object> modifyPassword(String email, String oldPassword, String newPassword) {
+//
+//
+//
+//
+//        return null;
+//    }
+
+    @PostMapping("/user/queryInfoByParam")
+    public Map<String,Object> queryAllUser(UserInfo userInfo){
+        try {
+            int page =1;
+            int limit = 10;
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("page", page);
+            resultMap.put("limit", limit);
+            Map<String,Object> param =OaUtil.objectToMap(userInfo);
+            List<UserInfo> userInfos = userService.getAllUserInfo(param,page, limit);
+            resultMap.put("code", "0");
+            resultMap.put("data", userInfos);
+            return resultMap;
+        }catch (Exception e){
+            return null;
+        }
+
+    }
+
+    @PostMapping("/user/delete")
+    public Map<String,Object> deleteByNo(String[] ids){
+        userService.deleteInfos(ids);
+        return ResponeUtil.respondSuccess();
+    }
 
 
+    @GetMapping("/user/queryAll")
+    public Map<String,Object> queryAllUser(int page,int limit){
+        try {
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("page", page);
+            resultMap.put("limit", limit);
+            Map<String,Object> param = new HashMap<>();
+            List<UserInfo> userInfos = userService.getAllUserInfo(param,page, limit);
+            resultMap.put("code", "0");
+            resultMap.put("count", userService.countAllInfo());
+            resultMap.put("data", userInfos);
+            return resultMap;
+        }catch (Exception e){
+            return null;
+        }
+    }
 
-
-        return null;
+    @GetMapping("/user/queryAllName")
+    public Map<String,Object> queryAllUserName(){
+        List<Map<String,Object>> studentInfos = userService.getUserInfo("学生");
+        List<Map<String,Object>> teacherInfos = userService.getUserInfo("老师");
+        studentInfos.addAll(teacherInfos);
+        Map<String,Object> param = new HashMap<>();
+        param.put("student",studentInfos);
+//        param.put("teacher",teacherInfos);
+        return param;
     }
 }

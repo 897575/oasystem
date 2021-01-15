@@ -5,10 +5,10 @@ import com.just.oasystem.user.service.MailService;
 import com.just.oasystem.user.service.UserService;
 import com.just.oasystem.util.ResponeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,7 +26,7 @@ public class MailController {
     public Map<String, Object> sendSimpleMailMessage(String email) {
         UserInfo info = new UserInfo();
         info.setEmail(email);
-        info =userService.getUserInfoByNo(info);
+        info=userService.getUserInfoByNo(info);
         if(info==null){
             return ResponeUtil.respondError("没有该邮箱");
         }

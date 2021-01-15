@@ -14,14 +14,30 @@ public class UserInfo {
     private String userNo;
     private String userName;
     private String password;
-    private Integer age;
     private String sex;
     private String mobilePhone;
     private String email;
-    private String status;
     private String authority;
+    private String remark;
     private String createTime;
     private String creator;
+    private String report;
+
+    public String getReport() {
+        return report;
+    }
+
+    public void setReport(String report) {
+        this.report = report;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public String getEmail() {
         return email;
@@ -47,14 +63,6 @@ public class UserInfo {
         this.userName = userName;
     }
 
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     public String getSex() {
         return sex;
     }
@@ -69,14 +77,6 @@ public class UserInfo {
 
     public void setMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getAuthority() {
