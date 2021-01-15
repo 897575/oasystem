@@ -6,29 +6,48 @@
             <result column="user_no" property="userNo"/>
             <result column="user_name" property="userName"/>
             <result column="password" property="password"/>
-            <result column="age" property="age"/>
             <result column="sex" property="sex"/>
-            <result column="moble_phone" property="mobilePhone"/>
+            <result column="mobile_phone" property="mobilePhone"/>
             <result column="email" property="email"/>
-            <result column="status" property="status"/>
             <result column="authority" property="authority"/>
+            <result column="remark" property="remark"/>
             <result column="create_time" property="createTime"/>
             <result column="creator" property="creator"/>
+            <result column="report" property="report"/>
+
     </resultMap>
 
-    <select id="getAllUserInfo" resultMap="userInfoMap">
+    <select id="getAllUserInfo" resultMap="userInfoMap" parameterType="map">
 
         SELECT
-              user_no,user_name,password,age,sex,mobile_phone,email,status,authority,create_time,creator
+              user_no,user_name,password,sex,mobile_phone,email,authority,remark,create_time,creator,report
 
         FROM
               oa_user_info
+        <where>
+            <if test="userNo!=null">
+                user_no = #{userNo}
+            </if>
+            <if test="email!=null">
+                AND email = #{email}
+            </if>
+            <if test="mobilePhone!=null">
+                AND mobile_phone = #{mobilePhone}
+            </if>
+            <if test="userName!=null">
+                AND user_name like '%#{userName}%'
+            </if>
+            <if test="report!=null">
+                AND report=#{report}
+            </if>
+        </where>
+            limit #{page},#{limit}
     </select>
 
     <select id="getUserInfoByNo" resultMap="userInfoMap" parameterType="com.just.oasystem.user.model.UserInfo">
 
         SELECT
-              user_no,user_name,password,age,sex,mobile_phone,email,status,authority,create_time,creator
+              user_no,user_name,password,sex,mobile_phone,email,authority,remark,create_time,creator,report
 
         FROM
               oa_user_info
@@ -38,10 +57,13 @@
                 user_no = #{userNo}
             </if>
             <if test="email!=null">
-                OR email = #{email}
+                AND email = #{email}
             </if>
             <if test="mobilePhone!=null">
-                OR mobile_phone = #{mobilePhone}
+                AND mobile_phone = #{mobilePhone}
+            </if>
+            <if test="report!=null">
+                AND report=#{report}
             </if>
         </where>
 
@@ -50,9 +72,9 @@
     <insert id="saveUserInfo" parameterType="com.just.oasystem.user.model.UserInfo">
         INSERT INTO
                     oa_user_info
-                    (user_no,user_name,password,age,sex,mobile_phone,email,status,authority,create_time,creator)
+                    (user_no,user_name,password,sex,mobile_phone,email,authority,remark,create_time,creator,report)
                     VALUES
-                    (#{userNo},#{userName},#{password},#{age},#{sex},#{mobilePhone},#{email},#{status},#{authority},now(),#{creator})
+                    (#{userNo},#{userName},#{password},#{sex},#{mobilePhone},#{email},#{authority},#{remark},DATE_FORMAT(now(),'%Y-%m-%d'),#{creator},#{report})
     </insert>
 
     <update id="updateUserInfo" parameterType="com.just.oasystem.user.model.UserInfo">
@@ -66,20 +88,46 @@
                        mobile_phone = #{mobilePhone},
                    </if>
                    <if test="email!=null">
-                       email = #{email}
-                   </if>
-                   <if test="status!=null">
-                       status = #{status},
+                       email = #{email},
                    </if>
                    <if test="authority!=null">
                        authority = #{authority},
                    </if>
-                   <if test="age!=null">
-                       age = #{age}
+                   <if test="remark!=null">
+                       remark = #{remark},
+                   </if>
+                   <if test="report!=null">
+                       report =#{report}
                    </if>
                </trim>
         WHERE
                 user_no = #{userNo}
     </update>
 
+    <delete id="deleteInfos" parameterType="list" >
+        DELETE FROM
+                    oa_user_info
+        WHERE
+              user_no IN
+              <foreach collection="array" item="item" index="index" separator="," open="(" close=")">
+                  #{item}
+              </foreach>
+    </delete>
+    
+    <select id="countAllInfo" resultType="int">
+        SELECT
+              COUNT(user_no)
+        FROM
+              oa_user_info
+    </select>
+
+
+    <select id="getUserInfo" resultType="map" parameterType="string">
+        SELECT
+                user_no AS userNo,user_name AS userName, report
+        FROM
+              oa_user_info
+        WHERE
+              authority = #{authority}
+    </select>
 </mapper>

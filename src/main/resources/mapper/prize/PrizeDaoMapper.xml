@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.just.oasystem.prize.dao.PrizeDao">
+    <resultMap id="prizeResultMap" type="com.just.oasystem.prize.model.PrizeInfo">
+        <result column="prize_id" property="prizeId"/>
+        <result column="prize_name" property="prizeName"/>
+        <result column="prize_level" property="prizeLevel"/>
+        <result column="prize_type" property="prizeType"/>
+        <result column="prize_describe" property="prizeDescribe"/>
+        <result column="prize_status" property="prizeStatus"/>
+        <result column="prize_time" property="prizeTime"/>
+    </resultMap>
+    
+    <select id="getAllPrizeInfo" parameterType="map" resultMap="prizeResultMap">
+        SELECT
+            prize_id,prize_name,prize_level,prize_type,prize_describe,prize_status,prize_time
+        FROM
+            prize_info
+
+        WHERE
+            prize_status != '已失效' limit #{page},#{pageSize}
+
+    </select>
+    
+    
+    <insert id="insertPrizeInfo" parameterType="com.just.oasystem.prize.model.PrizeInfo">
+        INSERT INTO
+                prize_info
+                (prize_name,prize_level,prize_time,prize_describe,prize_type,prize_status)
+        VALUES
+                (#{prizeName},#{prizeLevel},date_format(now(),'%Y-%m-%d'),#{prizeDescribe},#{prizeType},#{prizeStatus})
+    </insert>
+
+    <select id="countPrizeInfo" resultType="int">
+        SELECT COUNT(1) FROM prize_info
+    </select>
+    
+    <select id="queryInfoByParam" parameterType="com.just.oasystem.prize.model.PrizeInfo" resultMap="prizeResultMap">
+        SELECT
+              prize_id,prize_name,prize_level,prize_type,prize_describe,prize_status,prize_time
+          FROM
+              prize_info
+          <where>
+              <if test="prizeStatus!=null">
+                  prize_status = #{prizeStatus}
+              </if>
+              <if test="prizeLevel!=null">
+                  AND prize_level = #{prizeLevel}
+              </if>
+          </where>
+    </select>
+    
+    <update id="updatePrizeStatus" parameterType="com.just.oasystem.prize.model.PrizeInfo">
+        UPDATE prize_info SET prize_status = #{prizeStatus} WHERE prize_id = #{prizeId}
+    </update>
+    
+    <select id="getAllPrizeInfoNoLimit" resultMap="prizeResultMap">
+          SELECT
+            prize_name,prize_level,prize_type,prize_describe,prize_status,prize_time
+        FROM
+            prize_info
+        WHERE
+            prize_status = '已生效'
+
+    </select>
+    
+    <select id="queryPrizeSize" resultType="int">
+        SELECT COUNT(distinct prize_level ) FROM prize_info
+    </select>
+</mapper>

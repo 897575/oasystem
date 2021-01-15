@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>公司年会抽奖</title>
+
+    <link rel="stylesheet" href="../css/cj.css">
+
+    <script type="text/javascript" src="../js/lib/jquery.min.js"></script>
+    <style>
+        .num_box {
+            font-size: 70px;
+        }
+    </style>
+
+</head>
+
+<body>
+<!-- 主体盒子-->
+<div class="main-box">
+    <!-- 喜迎新年-->
+    <div class="title-box">
+        <img src="../images/2.png" alt="">
+    </div>
+    <!-- 装饰点缀-->
+    <div class="desc-box">
+        <img src="../images/3.png" alt="">
+    </div>
+    <div class="main">
+        <!-- 数字背景盒子-->
+        <div class="num-bg-box">
+            <!-- 数字盒子-->
+            <div class="num_box">
+                祝你好运~
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 操作按钮-->
+<div class="btn-box">
+    <div class="btn start">开始抽奖</div>
+    <div class="btn stop">停止抽奖</div>
+</div>
+
+<!--js-->
+<script>
+    $(function () {
+        $('.start').click(function () {
+            if (!isStart) {
+                isStart = true;
+                actuator = setInterval(function () {
+                    index = random(0, NAMEARRAY.length - 1);
+                    $('.num_box').text(NAMEARRAY[index]);
+                }, 50);
+            } else {
+                return;
+            }
+        });
+        $('.stop').click(function () {
+            if (isStart) {
+                isStart = false;
+                window.clearInterval(actuator);
+                NAMEARRAY.splice(index, 1);
+            } else {
+                return;
+            }
+        });
+    })
+
+    var actuator = null;
+    var index = null;
+    var isStart = false;
+
+    var NAMES = "吴晓军、王浩军、田春艳、陈付强、赵利国、张丹贵、袁保禄、冯云飞、赵越、陈宁、马宏、林彬彬、纪岚菲、张彦普、崔梦娜、李建萍、陈曦、李红华、马素侠、王哲、贺伟华、杨晨芳、罗力、董萌、何烁、李婷婷、杨晶晶、张姗、赵琨、张玉、苗卉、穆彤、陈健璋、张静、尤泽润、赵坤、史学峰、王景朝、周军帅、陈雪、张锦涛、赵青、李  娇、靳焕新、马坤、高振杰、郑丽丽、封英、王义芳、郭乃欣、杨春霞、王敬轩、周鹏飞、陆桂萍、刘悦、艾岩、陈洁、张莎莎、白淑月、耿晓宇、曹梦美、康风丽、陈曦、董利刚、陈洁、陈翠萍、张聚云、李亚垒、马瑞娜、张倩倩、张伟梦、王彩霞、于琼、邵艳芸、苏园、陈迎晓、刘晶、白亚东、王思晗、田婧思、丁怡、王静、朱春平、刘翠玲、孟爽、刘千惠"
+    var NAMEARRAY = NAMES.split('、');
+
+    function random(lower, upper) {
+        return Math.floor(Math.random() * (upper - lower + 1)) + lower;
+    }
+
+</script>
+</body>
+
+</html>

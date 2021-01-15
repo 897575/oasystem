@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.just.oasystem.prize.dao.PrizeWinDao">
+    <resultMap id="prizeWinResultMap" type="com.just.oasystem.prize.model.PrizeWinInfo">
+        <result column="prize_win_id" property="prizeWinId"/>
+        <result column="user_no" property="userNo"/>
+        <result column="user_name" property="userName"/>
+        <result column="prize_name" property="prizeName"/>
+        <result column="prize_level" property="prizeLevel"/>
+        <result column="prize_type" property="prizeType"/>
+        <result column="prize_describe" property="prizeDescribe"/>
+        <result column="prize_win_time" property="prizeWinTime"/>
+    </resultMap>
+    
+    <select id="getAllPrizeWinInfo" parameterType="map" resultMap="prizeWinResultMap">
+        SELECT
+            prize_win_id,user_no,user_name,prize_name,prize_level,prize_type,prize_describe,prize_win_time
+        FROM
+            prize_win_list_info limit #{page},#{pageSize}
+    </select>
+    
+    <insert id="insertPrizeWinInfos" parameterType="list">
+        INSERT INTO
+              prize_win_list_info
+        (user_no,user_name,prize_name,prize_level,prize_type,prize_describe,prize_win_time)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.userNo},#{item.userName},#{item.prizeName},#{item.prizeLevel},#{item.prizeType},#{item.prizeDescribe},now())
+        </foreach>
+
+    </insert>
+
+    <select id="countPrizeWinInfo" resultType="int">
+        SELECT COUNT(1) FROM prize_win_list_info
+    </select>
+</mapper>

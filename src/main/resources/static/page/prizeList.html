@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" >
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">奖品名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="username" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
+            </div>
+        </script>
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">生效</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">失效</a>
+        </script>
+
+    </div>
+</div>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            prizeList = layui.table;
+
+        prizeList.render({
+            elem: '#currentTableId',
+            url: '/prize/queryAll',
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            cols: [[
+                {type: "checkbox", width: 50},
+                {field: 'prizeId', width: 110, title: '奖品编号', sort: true},
+                {field: 'prizeName', width: 110, title: '奖品名称'},
+                {field: 'prizeType', width: 110, title: '奖品类别'},
+                {field: 'prizeLevel', width: 110, title: '奖品等级'},
+                {field: 'prizeDescribe', title: '奖品描述', minWidth: 150},
+                {field: 'prizeStatus', width: 110, title: '奖品状态'},
+                {field: 'prizeTime', width: 110, title: '奖品创建时间'},
+                {title: '操作', minWidth: 130, toolbar: '#currentTableBar', align: "center"}
+            ]],
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 10,
+            page: true,
+            skin: 'line'
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            var result = JSON.stringify(data.field);
+            layer.alert(result, {
+                title: '最终的搜索信息'
+            });
+
+            //执行搜索重载
+            prizeList.reload('currentTableId', {
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    searchParams: result
+                }
+            }, 'data');
+
+            return false;
+        });
+
+        /**
+         * toolbar监听事件
+         */
+        prizeList.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听添加操作
+                var index = layer.open({
+                    title: '添加用户',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin:true,
+                    shadeClose: true,
+                    area: ['100%', '100%'],
+                    content: '../page/table/prizeAdd.html',
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+            } else if (obj.event === 'delete') {  // 监听删除操作
+                var checkStatus = prizeList.checkStatus('currentTableId')
+                    , data = checkStatus.data;
+                layer.alert(JSON.stringify(data));
+            }
+        });
+
+        $("")
+
+
+        //监听表格复选框选择
+        prizeList.on('checkbox(currentTableFilter)', function (obj) {
+            console.log(obj)
+        });
+
+        prizeList.on('tool(currentTableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+                if(data.prizeStatus=='已生效'){
+                    return ;
+                }
+                $.ajax({
+                    url:"/prize/update",
+                    type:"POST",
+                    dataType:"json",
+                    data:{"prizeStatus":"已生效","prizeId":data.prizeId},
+                    success:function (result) {
+                        location.reload();
+                        layer.close(index);
+                    }
+                });
+                return false;
+            } else if (obj.event === 'delete') {
+                if(data.prizeStatus=='未生效'){
+                    return ;
+                }
+                layer.confirm('真的要失效么', function (index) {
+                    $.ajax({
+                        url:"/prize/update",
+                        type:"POST",
+                        dataType:"json",
+                        data:{"prizeStatus":"已失效","prizeId":data.prizeId},
+                        success:function (result) {
+                            location.reload();
+                            layer.close(index);
+                        }
+                    });
+                });
+            }
+        });
+
+    });
+</script>
+
+</body>
+</html>

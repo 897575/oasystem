@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.just.oasystem.tax.dao.TaxDao">
+    <resultMap id="prizeResultMap" type="com.just.oasystem.tax.model.TaxInfo">
+        <result column="bill_no" property="billNo"/>
+        <result column="tax_amount_money" property="money"/>
+        <result column="user_no" property="userNo"/>
+        <result column="user_name" property="userName"/>
+        <result column="tax_time" property="taxTime"/>
+        <result column="approval_no" property="approvalNo"/>
+        <result column="tax_status" property="taxStatus"/>
+        <result column="tax_describe" property="taxDescribe"/>
+        <result column="approval_opinion" property="approvalOpinion"/>
+        <result column="approval_time" property="approvalTime"/>
+        <result column="bill_no" property="billNo"/>
+    </resultMap>
+    
+    <select id="getAllTaxInfo" resultMap="prizeResultMap" parameterType="map">
+        SELECT
+              a.bill_no,a.tax_amount_money,a.user_no,b.user_name,a.tax_time,a.approval_no,a.tax_status,
+              a.tax_describe,a.approval_opinion,a.approval_time,a.bill_no
+        FROM
+              oa_tax_info a left join oa_user_info b ON a.user_no=b.user_no
+        <where>
+            <if test="userNo!=null">
+                a.user_no = #{userNo}
+            </if>
+        </where>
+               limit #{page},#{pageSize}
+    </select>
+
+    <select id="insertTaxInfo" parameterType="com.just.oasystem.tax.model.TaxInfo">
+        INSERT INTO
+                    oa_tax_info
+                    (bill_no,tax_amount_money,user_no,tax_time,tax_status,tax_describe)
+        VALUES
+                    (#{billNo},#{money},#{userNo},now(),#{taxStatus},#{taxDescribe})
+
+    </select>
+
+    <update id="updateTaxInfo" parameterType="map" >
+        UPDATE
+               oa_tax_info
+        SET
+               approval_no = #{approvalNo},approval_opinion=#{approvalOpinion}
+               ,approval_time = now()
+        WHERE 
+              tax_id IN 
+              <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+                  #{item}
+              </foreach>
+
+    </update>
+
+    <select id="countAllInfo" parameterType="Map" resultType="int">
+        SELECT COUNT(1) FROM oa_tax_info
+        <where>
+            <if test="userNo!=null">
+                user_no=#{userNo}
+            </if>
+            <if test="billNo!=null">
+               AND bill_no=#{billNo}
+            </if>
+        </where>
+    </select>
+
+</mapper>
